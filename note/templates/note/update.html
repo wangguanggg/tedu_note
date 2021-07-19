@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>更新笔记</title>
+</head>
+<body>
+<form action="/note/update", method="post">
+    {% csrf_token %}
+    <p>id<input type="text" value="{{ note.id }}" name="id" readonly="true"></p>
+    <p>标题<input type="text" name="title" value="{{ note.title }}"></p>
+    <p>内容<textarea name="content" id="" cols="30" rows="10">{{ note.content }}</textarea></p>
+    <p><input type="submit" value="提交"></p>
+
+</form>
+</body>
+</html>

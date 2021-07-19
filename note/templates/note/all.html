@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>我的笔记</title>
+</head>
+<body>
+这是{{ request.session.username }}的笔记
+<a href="/note/add">增加笔记</a>
+<table>
+    <tr>
+        <td>id</td>
+        <td>标题</td>
+        <td>内容</td>
+        <td>创建时间</td>
+        <td>更新时间</td>
+        <td>修改</td>
+        <td>删除</td>
+    </tr>
+    {% for row in notes %}
+        <tr>
+            <td>{{ row.id }}</td>
+            <td>{{ row.title}}</td>
+            <td>{{ row.content }}</td>
+            <td>{{ row.created_time }}</td>
+            <td>{{ row.update_time }}</td>
+            <td><a href="/note/update?id={{ row.id }}">修改</a></td>
+            <td><a href="/note/delete?id={{ row.id }}">删除</a></td>
+        </tr>
+    {% endfor %}
+</table>
+
+{% if notes.has_previous %}
+    <a href="/note/all?page={{ notes.previous_page_number }}">上一页</a>
+{% else %}
+    上一页
+{% endif %}
+
+{% for p_num in paginator.page_range %}
+    {% if p_num == c_pagenum %}
+        {{ p_num }}
+    {% else %}
+        <a href="/note/all?page={{ p_num }}">{{ p_num }}</a>
+    {% endif %}
+{% endfor %}
+
+
+{% if notes.has_next %}
+    <a href="/note/all?page={{ notes.next_page_number }}">下一页</a>
+{% else %}
+    下一页
+{% endif %}
+<p><a href="/note/download">下载全部为csv</a></p>
+<p><a href="/note/downpage?page={{ c_pagenum }}">下载当前页</a></p>
+</body>
+</html>
